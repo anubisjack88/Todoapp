@@ -4,10 +4,10 @@
 	$errors = "";
 
 	// connect to database
-	$servername = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
-
+$dbname = "Todo";
 try {
     $conn = new PDO("mysql:host=$servername;dbname=Todo", $username, $password);
     // set the PDO error mode to exception
@@ -33,31 +33,22 @@ catch(PDOException $e)
 
 
   try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=Todo", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $id =  $_POST["id"];
-    // sql to delete a record
-    $sql = "DELETE FROM mytask WHERE id=$id";
-    // use exec() because no results are returned
-    $conn->exec($sql);
-    echo "Record deleted successfully";
+
     }
 catch(PDOException $e)
     {
     echo $sql . "<br>" . $e->getMessage();
     }
-$conn = null;
 
 
-  
 try { 
     if(!empty($_POST ['task'])&& isset($_POST['task'])){
         $task = $_POST['task'];
-        $conn = new PDO("mysql:host=$servername;dbname=$Todo", $username, $password);
-  
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO mytask (task)
-        VALUES ('$task')";
+
+        $sql = "INSERT INTO mytask (status)
+        VALUE ('$task')";
     
         $conn->exec($sql);
         echo "New record created successfully";
@@ -91,17 +82,6 @@ $conn = null;
 
 </head>
 <body>
-
-<div id="myDIV" class="header">
-  <h2 style="margin:5px">Todo!PHP-SQL20!9</h2>
-  <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
-</div>
-
-<ul id="myUL">
-  <li>Workout</li>
-  <li class="checked">Pay bills</li>
-  <li>Walk Mia</li>
   
 </ul>
 
@@ -165,13 +145,18 @@ function newElement() {
 <body>
 
 	<div class="heading">
-		<h2 style="font-style: 'Hervetica';">ToDo List Application PHP and MySQL database</h2>
+		<h2 style="font-style: 'Helvetica';">ToDo List Application PHP and MySQL database</h2>
 	</div>
 	<form method="post" action="index.php" class="input_form">
 		<input type="text" name="task" class="task_input">
-		<button type="submit" name="submit" id="add_btn" class="add_btn">Add Task</button>
+		<input type="submit" id="add_btn" class="add_btn" value="Submit to the Database">
+
 	</form>
-    
+  <form method="post" action="deletedata.php" class="input_form">
+  <input type="text" name="task" class="task_input">
+  <input type="submit" id="add_btn" class="add_btn" value="Remove data from the Database">
+  </form>
+
     <?php if (isset($errors)) { ?>
 	<p><?php echo $errors; ?></p>
 <?php } ?>
